@@ -12,7 +12,7 @@ const answerQuiz = require('./routes/answerQuiz');
 const deletQuiz = require('./routes/deleteQuiz');
 
 const connectionString = "mongodb+srv://alex123:brazil56@cluster0-cyvmn.mongodb.net/test?retryWrites=true&w=majority";
-const PORT = 5000 || process.env.PORT;
+const PORT = process.env.PORT || 5000;
 
 mongoose.connect(connectionString, {useNewUrlParser: true}).then(() => console.log('Database connected')).catch(err => console.log(err));
 
