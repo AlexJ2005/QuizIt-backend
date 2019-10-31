@@ -5,8 +5,6 @@ const Quiz = require('../models/Question')
 
 router.post('/', (req, res) => {
 
-
-
     const newQuiz = new Quiz({
         name: req.body.name,
         questions: req.body.questions
