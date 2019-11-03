@@ -11,7 +11,11 @@ router.get('/', (req, res) => {
             return res.status(404).json({error: "No quizes were found"})
         }    
         const searchedQuiz = quiz.filter((quiz) => {return quiz.name.includes(name)})
-        return res.send(searchedQuiz)
+        if(name == undefined){
+        return res.send(quiz)
+        } else if(name){
+            res.send(searchedQuiz)
+        }
         })
     
 })
