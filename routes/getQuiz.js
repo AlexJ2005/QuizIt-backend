@@ -3,13 +3,17 @@ const express = require('express');
 const router = express.Router();
 
 router.get('/', (req, res) => {
+    let {name} = req.query;
+
+    
     Quiz.find((err, quiz) => {
         if(err || !quiz){
             return res.status(404).json({error: "No quizes were found"})
         }    
-        
-        return res.send(quiz)
-    })
+        const searchedQuiz = quiz.filter((quiz) => {return quiz.name.includes(name)})
+        return res.send(searchedQuiz)
+        })
+    
 })
 
 module.exports = router;

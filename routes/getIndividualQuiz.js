@@ -8,9 +8,6 @@ router.get('/:id', (req, res) => {
             return res.json({error: 'Quiz was not found'})
         }
 
-        
-        
-
         res.json(quiz)
     })
     
