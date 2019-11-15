@@ -31,10 +31,14 @@ router.post("/:id", (req, res) => {
     }
     if (req.body.name) {
       User.findOne({ name: req.body.name }).then(user => {
+        //update user
         const rightAnswers = getRightAnswers(answerFeedBack);
         const addQuiz = { name: quiz.name, rightAmount: rightAnswers };
         const updatedUser = user.playedQuizzes.push(addQuiz);
         user.save(updatedUser);
+        //update quiz
+        const updatedQuiz = quiz.playedBy.push({ name: user.name });
+        quiz.save(updatedQuiz);
         res.send({ name: quiz.name, answerFeedBack });
       });
     }
