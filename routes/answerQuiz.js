@@ -37,7 +37,10 @@ router.post("/:id", (req, res) => {
         const updatedUser = user.playedQuizzes.push(addQuiz);
         user.save(updatedUser);
         //update quiz
-        const updatedQuiz = quiz.playedBy.push({ name: user.name });
+        const updatedQuiz = quiz.playedBy.push({
+          name: user.name,
+          rightAmount: rightAnswers
+        });
         quiz.save(updatedQuiz);
         res.send({ name: quiz.name, answerFeedBack });
       });

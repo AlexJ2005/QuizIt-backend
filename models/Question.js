@@ -10,7 +10,8 @@ const QuizSchema = new mongoose.Schema({
   ],
   playedBy: [
     {
-      name: String
+      name: String,
+      rightAmount: Number
     }
   ]
 });
