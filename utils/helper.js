@@ -1,5 +1,5 @@
 const getRightAnswers = array => {
-  let rightAnswer = 0;
+  var rightAnswer = 0;
 
   const rightAnswers = array.forEach(element => {
     if (Object.keys(element) === true) {
