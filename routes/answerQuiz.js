@@ -29,8 +29,8 @@ router.post("/:id", (req, res) => {
         });
       }
     }
-    if (req.body.name) {
-      User.findOne({ name: req.body.name }).then(user => {
+    if (req.body._id) {
+      User.findById(req.body._id).then(user => {
         //update user
         const rightAnswers = getRightAnswers(answerFeedBack);
         const addQuiz = { name: quiz.name, rightAmount: rightAnswers };
@@ -42,7 +42,7 @@ router.post("/:id", (req, res) => {
           rightAmount: rightAnswers
         });
         quiz.save(updatedQuiz);
-        res.send({ name: quiz.name, answerFeedBack });
+        res.send({ name: quiz.name, rightAnswers });
       });
     }
   });

@@ -12,7 +12,7 @@ router.post("/", async (req, res) => {
   }
   const newUser = new User({ name: name, playedQuizzes: [] });
 
-  newUser.save().then(user => res.send(user));
+  newUser.save().then(user => res.send(user._id));
 });
 
 module.exports = router;

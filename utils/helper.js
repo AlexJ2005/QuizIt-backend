@@ -1,9 +1,9 @@
 const getRightAnswers = array => {
   var rightAnswer = 0;
 
-  const rightAnswers = array.forEach(element => {
+  array.forEach(element => {
     if (Object.keys(element) === true) {
-      rightAnswer++;
+      rightAnswer += 1;
     }
   });
   return rightAnswer;
