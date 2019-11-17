@@ -4,8 +4,8 @@ const User = require("../models/User");
 const router = express.Router();
 const getRightAnswers = require("../utils/helper");
 
-router.post("/:id", (req, res) => {
-  Quiz.findById(req.params.id, (err, quiz) => {
+router.post("/:id", async (req, res) => {
+  await Quiz.findById(req.params.id, async (err, quiz) => {
     if (err || !quiz) {
       return res.status(404).json({ error: err });
     }
@@ -29,8 +29,8 @@ router.post("/:id", (req, res) => {
         });
       }
     }
-    if (req.body._id) {
-      User.findById(req.body._id).then(user => {
+    if (req.body.name) {
+      await User.findById(req.body.name).then(async user => {
         //update user
         const rightAnswers = getRightAnswers(answerFeedBack);
         const addQuiz = { name: quiz.name, rightAmount: rightAnswers };
@@ -41,8 +41,8 @@ router.post("/:id", (req, res) => {
           name: user.name,
           rightAmount: rightAnswers
         });
-        quiz.save(updatedQuiz);
-        res.send({ name: quiz.name, rightAnswers });
+        await quiz.save(updatedQuiz);
+        res.send({ name: quiz.name, answerFeedBack });
       });
     }
   });

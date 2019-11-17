@@ -22,7 +22,7 @@ mongoose
   .catch(err => console.log(err));
 
 app.use(bodyparser());
-app.use(morgan());
+app.use(morgan("dev"));
 app.use(cors());
 
 app.listen(PORT, () => console.log("Server started"));
