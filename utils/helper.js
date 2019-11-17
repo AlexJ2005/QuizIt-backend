@@ -2,8 +2,8 @@ const getRightAnswers = array => {
   var rightAnswer = 0;
 
   array.forEach(element => {
-    if (Object.keys(element) === true) {
-      rightAnswer += 1;
+    if (element[Object.keys(element)] === true) {
+      rightAnswer++;
     }
   });
   return rightAnswer;

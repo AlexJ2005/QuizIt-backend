@@ -42,7 +42,7 @@ router.post("/:id", async (req, res) => {
           rightAmount: rightAnswers
         });
         await quiz.save(updatedQuiz);
-        res.send({ name: quiz.name, answerFeedBack });
+        res.send({ name: quiz.name, answerFeedBack, rightAnswers });
       });
     }
   });
