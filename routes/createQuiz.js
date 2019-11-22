@@ -4,7 +4,7 @@ const Quiz = require("../models/Question");
 const User = require("../models/User");
 
 router.post("/", async (req, res) => {
-  await User.findById(req.params.id, (err, user) => {
+  await User.findById(req.body.id, (err, user) => {
     if (err || !user) {
       return res.status(404).json({ error: err });
     }
