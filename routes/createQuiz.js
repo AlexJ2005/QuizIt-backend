@@ -12,8 +12,8 @@ router.post("/", async (req, res) => {
     const { name } = user;
 
     const newQuiz = new Quiz({
-      name: req.params.name,
-      questions: req.params.questions,
+      name: req.body.name,
+      questions: req.body.questions,
       createdBy: name
     });
 
