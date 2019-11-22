@@ -1,16 +1,27 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const Quiz = require('../models/Question')
+const Quiz = require("../models/Question");
+const User = require("../models/User");
 
+router.post("/", async (req, res) => {
+  await User.findById(req.params.id, (err, user) => {
+    if (err || !user) {
+      return res.status(404).json({ error: err });
+    }
 
-router.post('/', (req, res) => {
+    const { name } = user;
 
     const newQuiz = new Quiz({
-        name: req.body.name,
-        questions: req.body.questions
-    })
+      name: req.params.name,
+      questions: req.params.questions,
+      createdBy: name
+    });
 
-    newQuiz.save().then((quiz) => res.json(quiz));
-})
+    newQuiz
+      .save()
+      .then(() => res.send({ response: "Quiz succesfully created" }))
+      .catch(err => res.send(err));
+  });
+});
 
 module.exports = router;

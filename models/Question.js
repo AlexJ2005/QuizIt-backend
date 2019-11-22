@@ -13,7 +13,8 @@ const QuizSchema = new mongoose.Schema({
       name: String,
       rightAmount: Number
     }
-  ]
+  ],
+  createdBy: String
 });
 
 module.exports = mongoose.model("Quiz", QuizSchema);
