@@ -9,12 +9,10 @@ router.post("/", async (req, res) => {
       return res.status(404).json({ error: err });
     }
 
-    const { name } = user;
-
     const newQuiz = new Quiz({
       name: req.body.name,
       questions: req.body.questions,
-      createdBy: name
+      createdBy: user.name
     });
 
     newQuiz
