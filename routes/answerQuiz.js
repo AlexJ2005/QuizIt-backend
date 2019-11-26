@@ -29,7 +29,7 @@ router.post("/:id", async (req, res) => {
         });
       }
     }
-    if (req.body.name) {
+    if (req.body.name !== null) {
       await User.findById(req.body.name).then(async user => {
         //update user
         const rightAnswers = getRightAnswers(answerFeedBack);
