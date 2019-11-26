@@ -44,6 +44,13 @@ router.post("/:id", async (req, res) => {
         await quiz.save(updatedQuiz);
         res.send({ name: quiz.name, answerFeedBack, rightAnswers });
       });
+    } else if (req.body.name === null) {
+      const rightAnswers = getRightAnswers(answerFeedBack);
+      const updatedQuiz = quiz.playedBy.push({
+        name: "Unknown",
+        rightAmount: rightAnswers
+      });
+      await quiz.save(updatedQuiz);
     }
   });
 });
