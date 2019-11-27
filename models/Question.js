@@ -11,7 +11,8 @@ const QuizSchema = new mongoose.Schema({
   playedBy: [
     {
       name: String,
-      rightAmount: Number
+      rightAmount: Number,
+      date: Date.now
     }
   ],
   createdBy: String
