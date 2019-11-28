@@ -35,7 +35,8 @@ router.post("/:id", async (req, res) => {
       const rightAnswers = getRightAnswers(answerFeedBack);
       const updatedQuiz = quiz.playedBy.push({
         name: "Unknown",
-        rightAmount: rightAnswers
+        rightAmount: rightAnswers,
+        date: Date.now()
       });
       await quiz.save(updatedQuiz);
       res.send({ name: quiz.name, answerFeedBack });
