@@ -12,7 +12,10 @@ const QuizSchema = new mongoose.Schema({
     {
       name: String,
       rightAmount: Number,
-      date: Date.now
+      date: {
+        type: Date,
+        default: Date.now
+      }
     }
   ],
   createdBy: String
