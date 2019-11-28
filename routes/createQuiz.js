@@ -12,7 +12,8 @@ router.post("/", async (req, res) => {
     const newQuiz = new Quiz({
       name: req.body.name,
       questions: req.body.questions,
-      createdBy: user.name
+      createdBy: user.name,
+      date: Date.now
     });
 
     newQuiz
