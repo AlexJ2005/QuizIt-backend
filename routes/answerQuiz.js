@@ -50,7 +50,8 @@ router.post("/:id", async (req, res) => {
         //update quiz
         const updatedQuiz = quiz.playedBy.push({
           name: user.name,
-          rightAmount: rightAnswers
+          rightAmount: rightAnswersm,
+          date: Date.now()
         });
         await quiz.save(updatedQuiz);
         res.send({ name: quiz.name, answerFeedBack, rightAnswers });
