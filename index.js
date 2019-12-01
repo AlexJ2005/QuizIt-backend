@@ -11,6 +11,7 @@ const getIndividualQuizRoute = require("./routes/getIndividualQuiz");
 const answerQuiz = require("./routes/answerQuiz");
 const deletQuiz = require("./routes/deleteQuiz");
 const createUser = require("./routes/createUser");
+const getIndividualUser = require("./routes/getIndividualUser");
 
 const connectionString =
   "mongodb+srv://alex123:brazil56@cluster0-cyvmn.mongodb.net/test?retryWrites=true&w=majority";
@@ -33,3 +34,4 @@ app.use("/quiz", getIndividualQuizRoute);
 app.use("/quiz/answer", answerQuiz);
 app.use("/quiz/delete", deletQuiz);
 app.use("/createUser", createUser);
+app.use("/user/", createUser);
