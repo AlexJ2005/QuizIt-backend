@@ -31,8 +31,7 @@ router.post("/:id", async (req, res) => {
     }
 
     if (req.body.name == null) {
-      console.log("This was called");
-      const rightAnswers = getRightAnswers(answerFeedBack);
+      const rightAnswer = getRightAnswers(answerFeedBack);
       const updatedQuiz = quiz.playedBy.push({
         name: "Unknown",
         rightAmount: rightAnswer
