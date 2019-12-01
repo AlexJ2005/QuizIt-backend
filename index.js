@@ -34,4 +34,4 @@ app.use("/quiz", getIndividualQuizRoute);
 app.use("/quiz/answer", answerQuiz);
 app.use("/quiz/delete", deletQuiz);
 app.use("/createUser", createUser);
-app.use("/user/", createUser);
+app.use("/user", createUser);
