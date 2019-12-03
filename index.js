@@ -34,4 +34,10 @@ app.use("/quiz", getIndividualQuizRoute);
 app.use("/quiz/answer", answerQuiz);
 app.use("/quiz/delete", deletQuiz);
 app.use("/createUser", createUser);
-app.use("/user", getIndividualUser);
+app.use("/user", ipMiddleware, getIndividualUser);
+
+const ipMiddleware = function(req, res, next) {
+  const clientIp = requestIp.getClientIp(req);
+  console.log(clientIp);
+  next();
+};

@@ -9,6 +9,7 @@ router.post("/:id", async (req, res) => {
     if (err || !quiz) {
       return res.status(404).json({ error: err });
     }
+    const ip = req.ip;
     let answerFeedBack = [];
 
     const { questions } = quiz;
