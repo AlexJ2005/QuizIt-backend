@@ -31,10 +31,10 @@ app.listen(PORT, () => console.log("Server started"));
 app.use("/createQuiz", createQuizRoute);
 app.use("/", getQuizRoute);
 app.use("/quiz", getIndividualQuizRoute);
-app.use("/quiz/answer", answerQuiz);
+app.use("/quiz/answer", ipMiddleware, answerQuiz);
 app.use("/quiz/delete", deletQuiz);
 app.use("/createUser", createUser);
-app.use("/user", ipMiddleware, getIndividualUser);
+app.use("/user", getIndividualUser);
 
 const ipMiddleware = function(req, res, next) {
   const clientIp = requestIp.getClientIp(req);
