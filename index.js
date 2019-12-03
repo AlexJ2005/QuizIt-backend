@@ -15,7 +15,7 @@ const createUser = require("./routes/createUser");
 const getIndividualUser = require("./routes/getIndividualUser");
 const ipMiddleware = function(req, res, next) {
   const clientIp = requestIp.getClientIp(req);
-  console.log(clientIp + Date.now());
+  console.log(clientIp + Date(Date.now()));
   next();
 };
 
