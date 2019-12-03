@@ -13,6 +13,11 @@ const answerQuiz = require("./routes/answerQuiz");
 const deletQuiz = require("./routes/deleteQuiz");
 const createUser = require("./routes/createUser");
 const getIndividualUser = require("./routes/getIndividualUser");
+const ipMiddleware = function(req, res, next) {
+  const clientIp = requestIp.getClientIp(req);
+  console.log(clientIp);
+  next();
+};
 
 const connectionString =
   "mongodb+srv://alex123:brazil56@cluster0-cyvmn.mongodb.net/test?retryWrites=true&w=majority";
@@ -36,9 +41,3 @@ app.use("/quiz/answer", ipMiddleware, answerQuiz);
 app.use("/quiz/delete", deletQuiz);
 app.use("/createUser", createUser);
 app.use("/user", getIndividualUser);
-
-const ipMiddleware = function(req, res, next) {
-  const clientIp = requestIp.getClientIp(req);
-  console.log(clientIp);
-  next();
-};
