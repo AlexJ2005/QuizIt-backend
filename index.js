@@ -5,6 +5,8 @@ const morgan = require("morgan");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const requestIp = require("request-ip");
+const dotenv = require("dotenv");
+dotenv.config();
 
 const createQuizRoute = require("./routes/createQuiz");
 const getQuizRoute = require("./routes/getQuiz");
@@ -19,8 +21,7 @@ const ipMiddleware = function(req, res, next) {
   next();
 };
 
-const connectionString =
-  "mongodb+srv://alex123:brazil56@cluster0-cyvmn.mongodb.net/test?retryWrites=true&w=majority";
+const connectionString = process.env.MONGO_URI;
 const PORT = process.env.PORT || 5000;
 
 mongoose
