@@ -11,14 +11,13 @@ router.post("/", async (req, res) => {
 
     const newQuiz = new Quiz({
       name: req.body.name,
-      questions: req.body.questions,
-      alternatives: req.body.alternatives,
+      questions: [req.body.questions, req.body.alternatives],
       createdBy: user.name
     });
 
     newQuiz
       .save()
-      .then(() => res.send({ response: "Quiz succesfully created" }))
+      .then(() => res.send({ quiz: newQuiz }))
       .catch(err => res.send(err));
   });
 });

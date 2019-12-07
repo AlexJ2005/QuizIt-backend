@@ -5,12 +5,12 @@ const QuizSchema = new mongoose.Schema({
   questions: [
     {
       text: String,
-      answer: String
-    }
-  ],
-  alternatives: [
-    {
-      text: String
+      answer: String,
+      alternatives: [
+        {
+          text: String
+        }
+      ]
     }
   ],
 
