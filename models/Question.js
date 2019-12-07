@@ -8,6 +8,12 @@ const QuizSchema = new mongoose.Schema({
       answer: String
     }
   ],
+  alternatives: [
+    {
+      text: String
+    }
+  ],
+
   playedBy: [
     {
       name: String,
