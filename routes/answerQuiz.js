@@ -9,7 +9,7 @@ router.post("/:id", async (req, res) => {
     if (err || !quiz) {
       return res.status(404).json({ error: err });
     }
-    const ip = req.ip;
+
     let answerFeedBack = [];
 
     const { questions } = quiz;
@@ -31,7 +31,9 @@ router.post("/:id", async (req, res) => {
       }
     }
 
-    if (req.body.name == null) {
+    const user = await User.findById(req.body.name);
+
+    if (req.body.name === null || !user) {
       const rightAnswer = getRightAnswers(answerFeedBack);
       const updatedQuiz = quiz.playedBy.push({
         name: "Unknown",
@@ -39,7 +41,7 @@ router.post("/:id", async (req, res) => {
       });
       await quiz.save(updatedQuiz);
       res.send({ name: quiz.name, answerFeedBack });
-    } else if (req.body.name) {
+    } else if (user) {
       await User.findById(req.body.name).then(async user => {
         //update user
         const rightAnswers = getRightAnswers(answerFeedBack);
