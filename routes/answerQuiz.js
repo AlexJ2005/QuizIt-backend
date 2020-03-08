@@ -15,8 +15,8 @@ router.post("/:id", async (req, res) => {
     const { questions } = quiz;
 
     for (let key in questions) {
-      let dbAnswer = questions[key];
-      let userAnswer = req.body.allAnswers[key];
+      let dbAnswer = questions[key].replace(/\s/g, "");
+      let userAnswer = req.body.allAnswers[key].replace(/\s/g, "");
 
       if (
         dbAnswer.answer.toLowerCase() == userAnswer.userAnswer.toLowerCase()
