@@ -15,11 +15,14 @@ router.post("/:id", async (req, res) => {
     const { questions } = quiz;
 
     for (let key in questions) {
-      let dbAnswer = questions[key].replace(/\s/g, "");
-      let userAnswer = req.body.allAnswers[key].replace(/\s/g, "");
+      let dbAnswer = questions[key];
+      let userAnswer = req.body.allAnswers[key];
+
+      console.log("DB: " + dbAnswer.answer.replace(/\s/g, ""));
 
       if (
-        dbAnswer.answer.toLowerCase() == userAnswer.userAnswer.toLowerCase()
+        dbAnswer.answer.replace(/\s/g, "").toLowerCase() ==
+        userAnswer.userAnswer.replace(/\s/g, "").toLowerCase()
       ) {
         answerFeedBack.push({
           [dbAnswer.text]: true
