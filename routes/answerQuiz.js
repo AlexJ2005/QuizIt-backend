@@ -71,9 +71,9 @@ router.post("/:id/question", async (req, res) => {
     answer.replace(/\s/g, "").toLowerCase() ==
     question.answer.replace(/\s/g, "").toLowerCase()
   ) {
-    res.send({ answerFeedBack: true });
+    res.send({ [question.text]: true });
   } else {
-    res.send({ answerFeedBack: false });
+    res.send({ [question.text]: false });
   }
 });
 
