@@ -18,18 +18,16 @@ router.post("/:id", async (req, res) => {
       let dbAnswer = questions[key];
       let userAnswer = req.body.allAnswers[key];
 
-      console.log("DB: " + dbAnswer.answer.replace(/\s/g, ""));
-
       if (
         dbAnswer.answer.replace(/\s/g, "").toLowerCase() ==
         userAnswer.userAnswer.replace(/\s/g, "").toLowerCase()
       ) {
         answerFeedBack.push({
-          [dbAnswer.text]: true
+          [dbAnswer.text]: true,
         });
       } else {
         answerFeedBack.push({
-          [dbAnswer.text]: false
+          [dbAnswer.text]: false,
         });
       }
     }
@@ -40,12 +38,12 @@ router.post("/:id", async (req, res) => {
       const rightAnswer = getRightAnswers(answerFeedBack);
       const updatedQuiz = quiz.playedBy.push({
         name: "Unknown",
-        rightAmount: rightAnswer
+        rightAmount: rightAnswer,
       });
       await quiz.save(updatedQuiz);
       res.send({ name: quiz.name, answerFeedBack });
     } else if (user) {
-      await User.findById(req.body.name).then(async user => {
+      await User.findById(req.body.name).then(async (user) => {
         //update user
         const rightAnswers = getRightAnswers(answerFeedBack);
         const addQuiz = { name: quiz.name, rightAmount: rightAnswers };
@@ -54,13 +52,29 @@ router.post("/:id", async (req, res) => {
         //update quiz
         const updatedQuiz = quiz.playedBy.push({
           name: user.name,
-          rightAmount: rightAnswers
+          rightAmount: rightAnswers,
         });
         await quiz.save(updatedQuiz);
         res.send({ name: quiz.name, answerFeedBack, rightAnswers });
       });
     }
   });
+});
+
+router.post("/:id/question", async (req, res) => {
+  const quiz = await Quiz.findById(req.params.id);
+  const question = quiz.questions.find(
+    (question) => question._id !== req.body._id
+  );
+  const answer = req.body.answer;
+  if (
+    answer.replace(/\s/g, "").toLowerCase() ==
+    question.answer.replace(/\s/g, "").toLowerCase()
+  ) {
+    res.send({ answerFeedBack: true });
+  } else {
+    res.send({ answerFeedBack: false });
+  }
 });
 
 module.exports = router;
