@@ -62,17 +62,20 @@ router.post("/:id", async (req, res) => {
 });
 
 router.post("/:id/question", async (req, res) => {
-  const quiz = await Quiz.findById(req.params.id);
-  const question = quiz.questions.find(
-    (question) => question._id !== req.body._id
-  );
+  const quiz = await Quiz.findById(req.params.id).select("questions");
+
+  const question = quiz.questions.id(req.body._id);
+
   const answer = req.body.answer;
   if (
-    answer.replace(/\s/g, "").toLowerCase() ==
+    answer.replace(/\s/g, "").toLowerCase() ===
     question.answer.replace(/\s/g, "").toLowerCase()
   ) {
     res.send({ [question.text]: true });
-  } else {
+  } else if (
+    answer.replace(/\s/g, "").toLowerCase() !==
+    question.answer.replace(/\s/g, "").toLowerCase()
+  ) {
     res.send({ [question.text]: false });
   }
 });
