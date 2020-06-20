@@ -1,12 +1,13 @@
 const express = require("express");
 const User = require("../models/User");
 const router = express.Router();
+const checkUser = require("../middleware");
 
-router.get("/:id", async (req, res) => {
-  User.findById(req.params.id, (err, user) => {
-    if (err || !user) {
-      return res.status(404).json({ err: "No user was found" });
-    }
+router.get("/", checkUser, async (req, res) => {
+  const user = await User.findById(req.user._id);
+
+  user.populate("createdQuizzes", (err, user) => {
+    user.password = undefined;
     res.send(user);
   });
 });

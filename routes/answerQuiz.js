@@ -2,64 +2,7 @@ const express = require("express");
 const Quiz = require("../models/Question");
 const User = require("../models/User");
 const router = express.Router();
-const getRightAnswers = require("../utils/helper");
-
-router.post("/:id", async (req, res) => {
-  await Quiz.findById(req.params.id, async (err, quiz) => {
-    if (err || !quiz) {
-      return res.status(404).json({ error: err });
-    }
-
-    let answerFeedBack = [];
-
-    const { questions } = quiz;
-
-    for (let key in questions) {
-      let dbAnswer = questions[key];
-      let userAnswer = req.body.allAnswers[key];
-
-      if (
-        dbAnswer.answer.replace(/\s/g, "").toLowerCase() ==
-        userAnswer.userAnswer.replace(/\s/g, "").toLowerCase()
-      ) {
-        answerFeedBack.push({
-          [dbAnswer.text]: true,
-        });
-      } else {
-        answerFeedBack.push({
-          [dbAnswer.text]: false,
-        });
-      }
-    }
-
-    const user = await User.findById(req.body.name);
-
-    if (req.body.name === null || !user) {
-      const rightAnswer = getRightAnswers(answerFeedBack);
-      const updatedQuiz = quiz.playedBy.push({
-        name: "Unknown",
-        rightAmount: rightAnswer,
-      });
-      await quiz.save(updatedQuiz);
-      res.send({ name: quiz.name, answerFeedBack });
-    } else if (user) {
-      await User.findById(req.body.name).then(async (user) => {
-        //update user
-        const rightAnswers = getRightAnswers(answerFeedBack);
-        const addQuiz = { name: quiz.name, rightAmount: rightAnswers };
-        const updatedUser = user.playedQuizzes.push(addQuiz);
-        user.save(updatedUser);
-        //update quiz
-        const updatedQuiz = quiz.playedBy.push({
-          name: user.name,
-          rightAmount: rightAnswers,
-        });
-        await quiz.save(updatedQuiz);
-        res.send({ name: quiz.name, answerFeedBack, rightAnswers });
-      });
-    }
-  });
-});
+const checkUser = require("../middleware");
 
 router.post("/:id/question", async (req, res) => {
   const quiz = await Quiz.findById(req.params.id).select("questions");
@@ -79,5 +22,27 @@ router.post("/:id/question", async (req, res) => {
     res.send({ [question.text]: false });
   }
 });
+
+
+router.post('/saveResult/guest', async (req, res) => {
+  const quiz = await Quiz.findById(req.body._id)
+  const playedBy = {
+    name: "Unknown",
+    rightAmount: req.body.rightAmount,
+  }
+  await quiz.updateOne({$push: {playedBy }})
+})
+
+router.post('/saveResult', checkUser, async (req, res) => {
+  const user = await User.findById(req.user._id)
+  const quiz = await Quiz.findById(req.body._id);
+
+  const playedBy = {
+    name: user.name,
+    rightAmount: req.body.rightAmount
+  }
+  await quiz.updateOne({$push: {playedBy}})
+})
+
 
 module.exports = router;
