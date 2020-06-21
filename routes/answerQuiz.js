@@ -35,7 +35,9 @@ router.post('/saveResult/guest', async (req, res) => {
 
 router.post('/saveResult', checkUser, async (req, res) => {
   const user = await User.findById(req.user._id)
+  console.log('got here')
   const quiz = await Quiz.findById(req.body._id);
+  console.log('got here 2')
 
   const playedBy = {
     name: user.name,
