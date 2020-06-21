@@ -43,7 +43,7 @@ router.post('/saveResult', checkUser, async (req, res) => {
     name: user.name,
     rightAmount: req.body.rightAmount
   }
-  await quiz.updateOne({$push: {playedBy}})
+  await quiz.updateOne({$push: {playedBy}}).then(() => res.send('This was done'))
 })
 
 
